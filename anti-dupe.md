@@ -20,4 +20,4 @@ Therefore in Bob's perspective
     Bob receives card #1 and acknowledges it.
     Bob receives card #2 and acknowledges it.
 
-> :key: Success! - Bob has received each card once and only once
+> :key:  Success! - Bob has received each card once and only once
