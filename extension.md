@@ -1,11 +1,11 @@
-# How can we add additional features to the protocol without breaking previous functionality?
+# Q2: How can we add additional features to the protocol without breaking previous functionality?
 
 > Assuming that an index card contains up to 4 ASCII characters as the body, Nodey is before Bob as the anti-duplication manager from the [`anti-dupe problem`](/anti-dupe.md), and that Alice wants to send a message to Bob...
 
 Generally, we can add additional features to the protocol without breaking previous functionality by adding more metadata to the card's `header` and/or introducing nodes with a special role.
 
 ---
-## Q2: How can we send a message to any individual on the whole UW campus?
+## Q3: How can we send a message to any individual on the whole UW campus?
 ---
 
 If there are enough people on the whole UW campus standing right next to each other where they could pass the card to any message recipient, we can send a message to any individual by adding the recipient's name as `recipient_name` in the metadata `header`. Then the nodes/people can keep passing the card until they find the right node with the recipient name.
@@ -15,13 +15,13 @@ On the other hand, if the people are not right next to each other and there's so
 :white_check_mark: Therefore, the most optimal way to send a message to the correct individual would be to include `recipient_location` and `recipient_name` in the metadata `header`. We need the location so if the nodes have to travel to pass the card towards the destination, then they know exactly where to travel towards. Then, when they have arrived at the destination, they can just search for the specific person with the name under `recipient_name`. This is very similar to an **envelope** where one usually writes the recipient's name and address on it so the postal service knows where to go to and who to give the message to.
 
 ---
-## Q3: How can we specify whether contents are ASCII text, Unicode text, or binary values?
+## Q4: How can we specify whether contents are ASCII text, Unicode text, or binary values?
 ---
 
 :white_check_mark: To specify whether the contents or body are ASCII text, Unicode text, or binary values, we can add the value `content_type` to the metadata `header` so each nodes and the recipients would know what format the body data is in. This is basically the practice of the `Content-Type` header when working with [HTTP requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type).
 
 ---
-## Q4: How can we keep a record of what nodes the card has passed through?
+## Q5: How can we keep a record of what nodes the card has passed through?
 ---
 
 Assuming that each node has a unique identifier, we need to add a `route-map` variable to the `header` metadata to keep a record of what nodes the card has passed through. The `route-map` variable is a collection of key-value pairs. When the card is first sent out, the sender adds their unique identifier and the timestamp sent to the `route-map`. When the card is acknowledged by a node/person, they would add their unique identifier as the key and the timestamp received as the value to `route-map`. Then when the card is finally received by the recipient, they can use their acknowledgement timestamp to calculate exactly how long it took to get from the sender to the receiver and the intermediary times in between nodes.
