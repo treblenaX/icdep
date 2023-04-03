@@ -1,3 +1,5 @@
+
+---
 # Q1: How can we ensure that each card is received once and only once?
 
 > Assuming that an index card contains up to 4 ASCII characters as the body and that Alice wants to send a message to Bob, we need to keep track of the data from the header metadata. First, we sum up the number of cards in a message and add it to each card's header as the `message_length` to describe the total number of cards in the message. Second, we think about the whole message as an array of cards in the correct order, and then be aware of each card's respective index in the array. Then we add each card's respective index into its header as the `message_index`. Therefore, Bob is now able to see if he has received all of the cards to make the message by comparing the number of cards he has to the `message_length` metaadata in the header. Received cards less or larger than the `message_length` could help Bob be aware of a discrepancy. 

@@ -1,3 +1,5 @@
+
+---
 # Q6: How can we send commands ("SLEEP", "RESTART", "ARE-YOU-THERE", etc) to individual nodes in the network, rather than treat them as pass-through intermediaries?
 
 If we analyze the proposal in Q5 in the [extension file](extension.md), we should acknowledge the assumption that **each node should have an unique identifier**. This would allow the recipient to have a record of what nodes each card has passed through and the time it took.

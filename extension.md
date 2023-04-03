@@ -1,3 +1,5 @@
+
+---
 # Q2: How can we add additional features to the protocol without breaking previous functionality?
 
 > Assuming that an index card contains up to 4 ASCII characters as the body, Nodey is before Bob as the anti-duplication manager from the [`anti-dupe problem`](/anti-dupe.md), and that Alice wants to send a message to Bob...
