@@ -1,0 +1,24 @@
+name: update-readme
+
+on:
+  push:
+    branches: [ "readme" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v2
+      - name: Run the script
+        run: python scripts/readme_update.py
+      - name: Commit files
+        run: |
+          git config --local user.name "treblenaX"
+          git add README.md
+          git commit -m "Updated readme with the markdown files"
+      - name: Push changes
+        uses: ad-m/github-push-action@readme
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true

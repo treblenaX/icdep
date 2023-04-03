@@ -1,18 +1,14 @@
 <details>
     <summary>anti-dupe.md</summary>
-    <p>
-        test
-    </p>
+    {ANTI}
 </details>
 
 <details>
     <summary>extension.md</summary>
-    <p>
-    </p>
+    {EXT}
 </details>
 
 <details>
     <summary>admin.md</summary>
-    <p>
-    </p>
+    {ADMIN}
 </details>

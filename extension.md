@@ -1,26 +1,55 @@
-# How can we add additional features to the protocol without breaking previous functionality?
+# Q2: How can we add additional features to the protocol without breaking previous functionality?
 
-Consider:
-    - Send to any individual on the whole UW campus
-    - Specify whether contents are ASCII text, Unicode text, or binary values
-    - Keep a record of what nodes the card has passed through.
+> Assuming that an index card contains up to 4 ASCII characters as the body, Nodey is before Bob as the anti-duplication manager from the [`anti-dupe problem`](/anti-dupe.md), and that Alice wants to send a message to Bob...
 
-Your extension mechanism should allow for any kind of extension we can imagine
+Generally, we can add additional features to the protocol without breaking previous functionality by adding more metadata to the card's `header` and/or introducing nodes with a special role.
 
-> Assuming that an index card contains up to 4 ASCII characters as the body and that Alice wants to send a message to Bob...
+---
+## Q3: How can we send a message to any individual on the whole UW campus?
+---
 
-To add additional features to the protocol without breaking previous functionality, we need to inscribe metadata as a `header` for each respective card that Alice sends to Bob. 
+If there are enough people on the whole UW campus standing right next to each other where they could pass the card to any message recipient, we can send a message to any individual by adding the recipient's name as `recipient_name` in the metadata `header`. Then the nodes/people can keep passing the card until they find the right node with the recipient name.
 
-In the [previous problem](anti-dupe.md), we utilized a `header` that has each card's index with `message_index` and the total amount of cards in the message as `message_length`. Therefore, we will be using the same concept to add more features to the protocol. Assuming that the protocol contains the same `message_index` and `message_length` metadata in the header as in the `anti-dupe.md` problem, we acknowledge that we have the previous functionality (and don't forget Nodey before Bob) to prevent duplicate cards.
+On the other hand, if the people are not right next to each other and there's some distance, then the nodes would have to travel to the next node and repeat the process until they reach the destination described in the `recipient_location` metadata where they can hand the message to the person with the name under `recipient_name`.
 
-## How can we send to any individual on the whole UW campus?
+:white_check_mark: Therefore, the most optimal way to send a message to the correct individual would be to include `recipient_location` and `recipient_name` in the metadata `header`. We need the location so if the nodes have to travel to pass the card towards the destination, then they know exactly where to travel towards. Then, when they have arrived at the destination, they can just search for the specific person with the name under `recipient_name`. This is very similar to an **envelope** where one usually writes the recipient's name and address on it so the postal service knows where to go to and who to give the message to.
 
-add destination and source in header
+---
+## Q4: How can we specify whether contents are ASCII text, Unicode text, or binary values?
+---
 
-## How can we specify whether contents are ASCII text, Unicode text, or binary values?
+:white_check_mark: To specify whether the contents or body are ASCII text, Unicode text, or binary values, we can add the value `content_type` to the metadata `header` so each nodes and the recipients would know what format the body data is in. This is basically the practice of the `Content-Type` header when working with [HTTP requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type).
 
-add the type of message in header
+---
+## Q5: How can we keep a record of what nodes the card has passed through?
+---
 
-## How can we keep a record of what nodes the card has passed through? 
+Assuming that each node has a unique identifier, we need to add a `route-map` variable to the `header` metadata to keep a record of what nodes the card has passed through. The `route-map` variable is a collection of key-value pairs. When the card is first sent out, the sender adds their unique identifier and the timestamp sent to the `route-map`. When the card is acknowledged by a node/person, they would add their unique identifier as the key and the timestamp received as the value to `route-map`. Then when the card is finally received by the recipient, they can use their acknowledgement timestamp to calculate exactly how long it took to get from the sender to the receiver and the intermediary times in between nodes.
 
-add the names of the person (node) as it travels to the destination
+> For example, if the route is [Alice, Z, Y, X, Bob] then this would be the interaction:
+
+    Alice acknowledges the card, appends { Alice: '0' } into the map, then sends it out to Z.
+    Z acknowledges the card, appends { Z: '100' } into the map, then sends it out to Y.
+    Y acknowledges the card, appends { Y: '200' } into the map, then sends it out to X.
+    X acknowledges the card, appends { X: '300' } into the map, then sends it out to Bob.
+    Bob acknowledges the card, appends { Bob: '500' } into the map.
+
+:white_check_mark: Now the entire history of the card's journey is marked and the latency of the card can be determined as well. 
+
+    {
+        Alice: '0', // in ms
+        Z: '100',
+        Y: '200',
+        X: '300',
+        Bob: '500'
+    }
+
+    Recipient   |   TBN*     |   Calculation |
+    _________________________________________
+    Alice       |   0ms     |   NA          |
+    Z           |   100ms   |   100 - 0     |
+    Y           |   100ms   |   200 - 100   |
+    X           |   100ms   |   300 - 200   |
+    Bob         |   200ms   |   500 - 300   |
+
+    *TBN = Time Between Nodes
