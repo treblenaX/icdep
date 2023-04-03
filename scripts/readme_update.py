@@ -13,7 +13,7 @@ with open('extension.md', 'r') as f:
     extension_text = f.read()
 
 # read the stub
-with open('README.stub', 'r') as f:
+with open('stubs/README.stub', 'r') as f:
     stub = f.read()
     readme = stub.replace('{ANTI}', anti_dupe_text);
     readme = readme.replace('{ADMIN}', admin_text);
