@@ -18,7 +18,7 @@ jobs:
           git add README.md
           git commit -m "Updated readme with the markdown files"
       - name: Push changes
-        uses: ad-m/github-push-action@readme
+        uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true
+          branch: ${{ github.ref }}
