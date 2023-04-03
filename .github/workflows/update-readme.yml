@@ -2,7 +2,7 @@ name: update-readme
 
 on:
   push:
-    branches: [ "readme" ]
+    branches: [ "main" ]
 
 jobs:
   build:
