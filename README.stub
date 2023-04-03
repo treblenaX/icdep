@@ -1,14 +1,23 @@
+<h1>What needs fixing in the Index Card Data Exchange Protocol?</h1>
+<p>Please check the individual files or refer to the dropdowns below...</p>
+
 <details>
     <summary>anti-dupe.md</summary>
-    {ANTI}
+    <div>
+        {ANTI}
+    </div>
 </details>
 
 <details>
     <summary>extension.md</summary>
-    {EXT}
+    <div>
+        {EXT}
+    </div>
 </details>
 
 <details>
     <summary>admin.md</summary>
-    {ADMIN}
+    <div>
+        {ADMIN}
+    </div>
 </details>
