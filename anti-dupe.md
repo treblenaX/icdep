@@ -28,6 +28,8 @@ Therefore in Bob's perspective
     Bob receives card #1 and acknowledges it.
     Bob receives card #2 and acknowledges it.
 
->If by any chance, Nodey has an unexpected downtime, then the successor of Nodey can request Bob to send them the cached data of what cards have been received before sending the incoming cards to Bob, and the successor of Nodey can acknowledge that data. Therefore, allowing the protocol to proceed.
+>If by any chance, Nodey has an unexpected downtime, then the successor of Nodey can request Bob to send them the cached data of what cards have been received before sending the incoming cards to Bob, and the successor of Nodey can acknowledge that data. Therefore, allowing the protocol to proceed. 
+>
+>As an extra edge case, if Alice is passing directly to Bob without any intermediary nodes, and there somehow are duplicates. Alice could ask Bob if he has received a specific card before sending it. After Bob acknowledges that he has not, then Alice can proceed to send the card.
 
 :white_check_mark: And thus, it is a guarantee that Bob has received each card once and only once
