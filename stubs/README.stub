@@ -4,21 +4,15 @@
 
 <details>
     <summary>anti-dupe.md</summary>
-    <div>
         {ANTI}
-    </div>
 </details>
 
 <details>
     <summary>extension.md</summary>
-    <div>
         {EXT}
-    </div>
 </details>
 
 <details>
     <summary>admin.md</summary>
-    <div>
         {ADMIN}
-    </div>
 </details>
